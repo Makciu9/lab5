@@ -16,10 +16,10 @@ public class actorSystem {
                     })
                     .match(TestResult.class, m -> {
                         boolean eval=false;
-                        Long resultTime=-1l;
+                        int resultTime=-1;
                         if (store.containsKey(m.getURL())){
                             eval=true;
-                            resultTime=store.get()
+                            resultTime=store.get(m.getUrl());
 
                         }
 
