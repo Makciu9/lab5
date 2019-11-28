@@ -18,6 +18,7 @@ public class actorSystem {
                         boolean eval=false;
                         Long resultTime=-1l;
                         if (store.containsKey(m.getURL())){
+                            eval=true;
                             
                         }
 
