@@ -21,7 +21,7 @@ public class actorSystem {
                             eval=true;
                             resultTime=store.get(m.getURL());
                         }
-                        sender().tell()
+                        sender().tell();
                     })
 
     }
