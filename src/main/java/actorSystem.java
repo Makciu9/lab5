@@ -16,6 +16,7 @@ public class actorSystem {
                     })
                     .match(TestResult.class, m -> {
                         boolean eval=false;
+                        Long resultTime=-1l;
                         
                         store.put(m.getURL(), m.getCount());
                     })
