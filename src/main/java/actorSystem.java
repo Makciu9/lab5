@@ -15,6 +15,8 @@ public class actorSystem {
                             store.put(m.getURL(), m.getCount());
                     })
                     .match(TestResult.class, m -> {
+                        boolean eval=false;
+                        
                         store.put(m.getURL(), m.getCount());
                     })
 
