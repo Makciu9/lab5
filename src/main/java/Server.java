@@ -1,4 +1,5 @@
 import akka.NotUsed;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
@@ -14,6 +15,18 @@ import java.util.concurrent.CompletionStage;
 import static jdk.nashorn.internal.runtime.regexp.joni.constants.StackType.RETURN;
 
 public class Server {
+    private ActorRef storeActor;
+    private final String STORE_ACTOR = "storeActor";
+
+    private ActorRef testPerformerRouter;
+    private final String TEST_PERFORMER_ROUTER = "testPerformerRouter";
+
+    private ActorRef testPackageActor;
+    private final String TEST_PACKAGE_ACTOR = "testPackageActor";
+
+    private static final String SERVER = "localhost";
+    private static final int PORT = 8080;
+
 
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
