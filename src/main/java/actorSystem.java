@@ -14,7 +14,9 @@ public class actorSystem {
                     .match(SearchResult.class, m -> {
                             store.put(m.getURL(), m.getCount());
                     })
-                    .match()
+                    .match(TestResult.class, m -> {
+                        store.put(m.getURL(), m.getCount());
+                    })
 
     }
 
