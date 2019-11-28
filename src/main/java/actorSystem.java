@@ -20,11 +20,7 @@ public class actorSystem {
                         if (store.containsKey(m.getURL())){
                             eval=true;
                             resultTime=store.get(m.getURL());
-
                         }
-
-
-                        store.put(m.getURL(), m.getCount());
                     })
 
     }
