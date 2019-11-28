@@ -4,6 +4,8 @@ import akka.japi.pf.ReceiveBuilder;
 
 import java.util.HashMap;
 
+import static akka.actor.TypedActor.self;
+
 public class actorSystem {
 
         private HashMap  <String, Integer> store = new HashMap<>();
@@ -21,7 +23,7 @@ public class actorSystem {
                             eval=true;
                             resultTime=store.get(m.getURL());
                         }
-                        sender().tell();
+                        sender().tell(1, self());
                     });
 
     }
