@@ -10,7 +10,7 @@ public class actorSystem {
         @Override
         public AbstractActor.Receive createReceive() {
             return ReceiveBuilder.create()
-                    .match(StoreMassage.class, m -> {
+                    .match(.class, m -> {
                         if (!store.containsKey(m.getPackageID()))
                             store.put(m.getPackageID(), m.getTests());
                         else {
