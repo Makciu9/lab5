@@ -1,9 +1,14 @@
+import akka.actor.AbstractActor;
+import akka.japi.pf.ReceiveBuilder;
+
+import java.util.HashMap;
+
 public class actorSystem {
 
         private HashMap  <Integer, ArrayList<Test>> store = new HashMap<>();
         //id res
         @Override
-        public Receive createReceive() {
+        public AbstractActor.Receive createReceive() {
             return ReceiveBuilder.create()
                     .match(StoreMassage.class, m -> {
                         if (!store.containsKey(m.getPackageID()))
