@@ -17,8 +17,10 @@ public class actorSystem {
                     .match(TestResult.class, m -> {
                         boolean eval=false;
                         Long resultTime=-1l;
-                        if (store.containsKey(m.getURL()))
+                        if (store.containsKey(m.getURL())){
                             
+                        }
+
 
                         store.put(m.getURL(), m.getCount());
                     })
