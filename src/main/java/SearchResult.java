@@ -6,5 +6,9 @@ public class SearchResult {
         public String getURL() {
             return URL;
         }
+
+        public int getCount() {
+            return count;
+        }
     }
 }
