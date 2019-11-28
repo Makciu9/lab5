@@ -8,6 +8,8 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.Dsl;
 
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
@@ -34,6 +36,7 @@ public class Server {
         final Http http = Http.get(system);
         final ActorMaterializer materializer =
                 ActorMaterializer.create(system);
+        final AsyncHttpClient client = Dsl.asyncHttpClient()
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = <вызов
         метода которому передаем Http, ActorSystem и ActorMaterializer>;
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
