@@ -22,7 +22,7 @@ public class actorSystem {
                             resultTime=store.get(m.getURL());
                         }
                         sender().tell();
-                    })
+                    });
 
     }
 
