@@ -8,10 +8,11 @@ import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
-public class ServerResult
-        {
+public class ServerResult {
             ActorRef actorSystem;
-            public class ServerResult( )
+   ServerResult(Http http, ActorSystem system, ActorMaterializer materializer ){
+       return Flow.
+    }
 
 
 
