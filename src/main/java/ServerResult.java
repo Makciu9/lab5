@@ -25,8 +25,8 @@ public class ServerResult {
                      return new Pair<HttpRequest, Integer>(HttpRequest.create("localhost"), 0);
                  }
                  String url = paramsMap.get("testUrl");
+                 Integer count = Integer.parseInt(paramsMap.get("count"));
                  
-
              }
     }
 
