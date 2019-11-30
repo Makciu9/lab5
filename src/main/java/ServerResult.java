@@ -20,7 +20,7 @@ public class ServerResult {
              .map((req)-> {
                  Map<String, String> paramsMap = req.getUri().query().toMap();
                  if (!paramsMap.containsKey("testUrl") || !paramsMap.containsKey("count")) {
-                     
+                     System.out.println(paramsMap.toString());
                  }
 
              }
