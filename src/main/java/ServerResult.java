@@ -38,7 +38,8 @@ public class ServerResult {
                      .thenCompose(res -> {
                          TestResult tmpTestResult =TestResult res;
                          Sink<SearchResult, CompletionStage<Long>> testSink =Flow.<SearchResult>create()
-                                 .mapConcat((r) -> Collections.nCopies(r.
+                                 .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
+                                 .mapAsync(6, url ->
 
 
              }
