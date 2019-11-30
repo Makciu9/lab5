@@ -6,11 +6,13 @@ import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.japi.Pair;
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.CompletionStage;
 import java.util.regex.Pattern;
 
 public class ServerResult {
@@ -30,7 +32,11 @@ public class ServerResult {
                  int count = Integer.parseInt(paramsMap.get("count"));
                  return new SearchResult(url, count);
              })
-             .mapAsync(6, sch -> Pattern.ask(actorSystem, SearchResult, Duration.ofMillis(3000) )
+             .mapAsync(6, sch -> Patterns.ask(actorSystem, SearchResult, Duration.ofMillis(3000))
+                     .thenCompose(res -> {
+                         TestResult tmpTestResult = res;
+                         Sink<SearchResult, CompletionStage<Long>> testSink =Flow.
+
 
              }
     }
