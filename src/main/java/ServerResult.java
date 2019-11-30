@@ -58,7 +58,7 @@ public class ServerResult {
                                              .from(Collections.singletonList(sch))
                                              .toMat(testSink, Keep.right()).run(materializer)
                                              .thenApply(time ->4f
-                                                     
+
                                  }
 
 
