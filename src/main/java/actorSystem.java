@@ -1,4 +1,5 @@
 import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
 import akka.japi.pf.ReceiveBuilder;
 
 
@@ -17,9 +18,9 @@ public class actorSystem {
                         String url = m.getURL();
                         int count = m.getCount();
                             if(store.containsKey(url)){
-                                sender().tell(new SearchResult(m.getURL(),count));
+                                sender().tell(new SearchResult(m.getURL(),count), self());
                             }
-                            else {sender().tell(new SearchResult(m.getURL(),count));}
+                            else {sender().tell(new SearchResult(m.getURL(),count), self());}
                     })
                     .match(TestResult.class, m -> {
                         store.put(m.getURL(), m.getTime());
@@ -27,6 +28,8 @@ public class actorSystem {
             .build();
 
     }
+
+    
 
 
 }
