@@ -19,6 +19,9 @@ public class ServerResult {
              .of(HttpRequest.class)
              .map((req)-> {
                  Map<String, String> paramsMap = req.getUri().query().toMap();
+                 if (!paramsMap.containsKey("testUrl") || !paramsMap.containsKey("count")) {
+                     
+                 }
 
              }
     }
