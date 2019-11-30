@@ -1,10 +1,12 @@
+
+
 public class TestResult {
 
         private String URL;
         private int time;
 
         public TestResult(String Url, int count ) {
-            this.URL = URL;
+            this.URL = Url;
             this.time = count;
         }
         public String getURL() {
@@ -15,4 +17,4 @@ public class TestResult {
             return time;
         }
     }
-}
+
