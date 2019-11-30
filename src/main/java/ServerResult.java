@@ -9,7 +9,9 @@ import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
+import akka.stream.javadsl.Source;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Dsl;
 
@@ -21,7 +23,7 @@ import java.util.regex.Pattern;
 
 public class ServerResult {
     static ActorRef actorSystem;
-    private AsyncHttpClient httpClient = Dsl.asyncHttpClient();
+    static AsyncHttpClient httpClient = Dsl.asyncHttpClient();
 
  static Flow<HttpRequest, HttpResponse, NotUsed> ServerFlow (Http http, ActorSystem system, ActorMaterializer materializer ){
      actorSystem = system.actorOf(Props.create(actorSystem.class));
@@ -45,7 +47,17 @@ public class ServerResult {
                                  .mapAsync(6, url -> {
                                      long start = System.nanoTime();
                                      return httpClient
-                                             .
+                                             .prepareGet(url)
+                                             .execute()
+                                             .toCompletableFuture()
+                                             .thenApply(resp -> System.nanoTime() - start);
+                                 })
+                                 .toMat(Sink.fold(0l, Long::sum), Keep.right());
+                                 if(tmpTestResult.getTime() == 0){
+                                     return Source
+                                             .from(Collections.singletonList(sch))
+                                             .toMat(testSink, Keep.right()).run(materializer)
+                                             .thenApply(time ->4f
                                  }
 
 
