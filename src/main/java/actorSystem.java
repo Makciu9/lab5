@@ -18,7 +18,7 @@ public class actorSystem {
                     })
                     .match(TestResult.class, m -> {
                         store.put(m.getURL(), m.getTime());
-                    });
+                    })
             .build();
 
     }
