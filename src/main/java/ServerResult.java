@@ -9,7 +9,9 @@ import akka.japi.Pair;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
+import java.time.Duration;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class ServerResult {
     static ActorRef actorSystem;
@@ -25,8 +27,11 @@ public class ServerResult {
                      return new Pair<HttpRequest, Integer>(HttpRequest.create("localhost"), 0);
                  }
                  String url = paramsMap.get("testUrl");
-                 Integer count = Integer.parseInt(paramsMap.get("count"));
-                 
+                 int count = Integer.parseInt(paramsMap.get("count"));
+                 return new SearchResult(url, count);
+             })
+             .mapAsync(6, sch -> Pattern.ask(actorSystem, SearchResult, Duration.ofMillis(3000) )
+
              }
     }
 
