@@ -14,9 +14,6 @@ public class ServerResult {
     public ServerResult(Http http, ActorSystem system, ActorMaterializer materializer) {
     }
 
-    Flow<HttpRequest, HttpResponse, NotUsed> ServerResult(Http http, ActorSystem system, ActorMaterializer materializer){
-        system.actorOf(Props.create(actorSystem.class);
 
-        return null;
     }
 }
