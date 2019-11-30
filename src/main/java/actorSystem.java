@@ -15,8 +15,8 @@ public class actorSystem {
             return ReceiveBuilder.create()
                     .match(SearchResult.class, m -> {
                         String url = m.getURL();
-                        int count - m.getCount();
-                            if(store.containsKey() && store.get(url).)
+                        int count = m.getCount();
+                            if(store.containsKey(url) && store.get(url).co)
                     })
                     .match(TestResult.class, m -> {
                         store.put(m.getURL(), m.getTime());
