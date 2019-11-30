@@ -16,7 +16,9 @@ public class actorSystem {
                     .match(SearchResult.class, m -> {
                         String url = m.getURL();
                         int count = m.getCount();
-                            if(store.containsKey(url) && store.get(url).co)
+                            if(store.containsKey(url)){
+                                
+                            }
                     })
                     .match(TestResult.class, m -> {
                         store.put(m.getURL(), m.getTime());
