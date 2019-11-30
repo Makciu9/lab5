@@ -14,7 +14,7 @@ public class actorSystem {
         public AbstractActor.Receive createReceive() {
             return ReceiveBuilder.create()
                     .match(SearchResult.class, m -> {
-                            store.put(m.getURL(), m.getCount());
+                            if()
                     })
                     .match(TestResult.class, m -> {
                         store.put(m.getURL(), m.getTime());
