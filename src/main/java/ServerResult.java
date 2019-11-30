@@ -8,6 +8,8 @@ import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
+import java.util.Map;
+
 public class ServerResult {
     static ActorRef actorSystem;
 
@@ -15,7 +17,10 @@ public class ServerResult {
      actorSystem = system.actorOf(Props.create(actorSystem.class));
      return Flow
              .of(HttpRequest.class)
-             .map((req)->)
+             .map((req)-> {
+                 Map<String, String> paramsMap = req.getUri().query().toMap();
+
+             }
     }
 
 
