@@ -1,6 +1,11 @@
+import akka.NotUsed;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
+import akka.http.javadsl.model.HttpRequest;
+import akka.http.javadsl.model.HttpResponse;
+import akka.stream.javadsl.Flow;
 
 public class ServerResult {
-    ServerResult(ActorSystem system) {actorSystemsystem.actorOf(Props.create(}
+    ServerResult(ActorSystem system) {system.actorOf(Props.create(actorSystem.class));}
+    Flow<HttpRequest, HttpResponse, NotUsed>
 }
