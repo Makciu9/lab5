@@ -39,7 +39,7 @@ public class ServerResult {
                  int count = Integer.parseInt(paramsMap.get("count"));
                  return new SearchResult(url, count);
              })
-             .mapAsync(6, sch -> Patterns.ask(actorSystem, SearchResult, Duration.ofMillis(3000))
+             .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
                      .thenCompose(res -> {
                          TestResult tmpTestResult =(TestResult) res;
                          Sink<SearchResult, CompletionStage<Long>> testSink =Flow.<SearchResult>create()
@@ -57,7 +57,7 @@ public class ServerResult {
                                      return Source
                                              .from(Collections.singletonList(sch))
                                              .toMat(testSink, Keep.right()).run(materializer)
-                                             .thenApply(time ->4f
+                                             .thenApply(time -> new TestResult(sch.)
 
                                  }
 
