@@ -5,6 +5,7 @@ import akka.actor.Props;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
+import akka.japi.Pair;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
@@ -21,6 +22,7 @@ public class ServerResult {
                  Map<String, String> paramsMap = req.getUri().query().toMap();
                  if (!paramsMap.containsKey("testUrl") || !paramsMap.containsKey("count")) {
                      System.out.println(paramsMap.toString());
+                     return new Pair<HttpRequest, Integer>(HttpRequest.create("localhost"), 0);
                  }
 
              }
