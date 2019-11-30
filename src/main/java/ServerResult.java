@@ -9,9 +9,13 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
 public class ServerResult {
-            ActorRef actorSystem;
-   static ServerFlow (Http http, ActorSystem system, ActorMaterializer materializer ){
-       return Flow.
+    static ActorRef actorSystem;
+
+ static Flow<HttpRequest, HttpResponse, NotUsed> ServerFlow (Http http, ActorSystem system, ActorMaterializer materializer ){
+     actorSystem = system.actorOf(Props.create(actorSystem.class));
+     return Flow
+             .of(HttpRequest.class)
+             .map((req)->)
     }
 
 
