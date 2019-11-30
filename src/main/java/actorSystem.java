@@ -21,7 +21,7 @@ public class actorSystem {
                         int resultTime=-1;
                         if (store.containsKey(m.getURL())){
                             eval=true;
-                            resultTime=store.get(m.getURL());
+                            resultTime=store.get(m.getTime());
                         }
                         sender().tell(1, self());
                     });
