@@ -1,18 +1,18 @@
 public class TestResult {
 
         private String URL;
-        private int count;
+        private int time;
 
         public TestResult(String Url, int count ) {
             this.URL = URL;
-            this.count = count;
+            this.time = count;
         }
         public String getURL() {
             return URL;
         }
 
-        public int getCount() {
-            return count;
+        public int getTime() {
+            return time;
         }
     }
 }
