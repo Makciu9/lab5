@@ -35,7 +35,7 @@ public class Server {
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = tmpServerResult.getFLOW(http, materializer);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = ServerResult(http, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost(SERVER , PORT),
