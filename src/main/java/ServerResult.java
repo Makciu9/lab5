@@ -9,8 +9,10 @@ import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Sink;
 
 import java.time.Duration;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.regex.Pattern;
@@ -34,8 +36,9 @@ public class ServerResult {
              })
              .mapAsync(6, sch -> Patterns.ask(actorSystem, SearchResult, Duration.ofMillis(3000))
                      .thenCompose(res -> {
-                         TestResult tmpTestResult = res;
-                         Sink<SearchResult, CompletionStage<Long>> testSink =Flow.
+                         TestResult tmpTestResult =TestResult res;
+                         Sink<SearchResult, CompletionStage<Long>> testSink =Flow.<SearchResult>create()
+                                 .mapConcat((r) -> Collections.nCopies(r.
 
 
              }
