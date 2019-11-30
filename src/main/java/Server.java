@@ -34,8 +34,8 @@ public class Server {
         ActorSystem system = ActorSystem.create("strim");
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        final ServerResult tmpServerResult = new ServerResult(system);
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = tmpServerResult.getFLOW(materializer);
+
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = tmpServerResult.getFLOW(http, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost(SERVER , PORT),
