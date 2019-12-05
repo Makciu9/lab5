@@ -57,8 +57,8 @@ public class ServerResult {
                                      return Source
                                              .from(Collections.singletonList(sch))
                                              .toMat(testSink, Keep.right()).run(materializer)
-                                             .thenApply(time -> new TestResult(sch.getURL,
-                                                     (long) (sumTime /NANO_TO_MS_FACTOR/ (float) ((pingRequest.getCount() == 0) ? 1 : pingRequest.getCount()))))
+                                             .thenApply(time -> new SearchResult(sch.,
+                                                     (long) (time /1_000_000L/ (float) ((sch.getCount() == 0) ? 1 : sch.getCount()))))
 
                                  }
 
