@@ -49,6 +49,7 @@ public class ServerResult {
                             System.out.println(res.toString());
                             System.out.println("dqef1wedfwwd");
                             TestResult tmpTestResult = (TestResult) res;
+                            System.out.println("dqef1wewefdfwwd");
 
                            // Sink<Pair<Try<HttpResponse>, Long>, CompletionStage<Long>> fold = Sink.fold(0L, (agg, next) -> agg + System.currentTimeMillis() - next.second());
                             Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
