@@ -36,6 +36,7 @@ public class Server {
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = ServerResult.ServerFlow(http, system, materializer);
+        System.out.println("wqd");
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost(SERVER , PORT),
