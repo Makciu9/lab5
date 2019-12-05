@@ -19,6 +19,7 @@ public class actorSystem extends AbstractActor {
                         String url = m.getURL();
                         int count = m.getCount();
                         System.out.print(url);
+                        System.out.print(count);
                            sender().tell(new SearchResult(m.getURL(), count), self());
 
                     })
