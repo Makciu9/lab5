@@ -40,14 +40,14 @@ public class ServerResult {
                         System.out.println(paramsMap.toString());
                         return new SearchResult(url, count);
                     }
-                    System.out.println(paramsMap.toString());
+                    System.out.println(count);
 
                     return new SearchResult(url, count);
                 })
                 .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
                         .thenCompose(res -> {
                             TestResult tmpTestResult = (TestResult) res;
-                            Sink<Pair<Try<HttpResponse>, Long>, CompletionStage<Long>> fold = Sink.fold(0L, (agg, next) -> agg + System.currentTimeMillis() - next.second());
+                           // Sink<Pair<Try<HttpResponse>, Long>, CompletionStage<Long>> fold = Sink.fold(0L, (agg, next) -> agg + System.currentTimeMillis() - next.second());
                             Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
                                     .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
                                     .mapAsync(6, url -> {
@@ -69,6 +69,7 @@ public class ServerResult {
                                         );
                             } else {
                                 return CompletableFuture.completedFuture(tmpTestResult);
+                                System.out.println(tmpTestResult);
                             }
                         }))
                 .map(res -> {
