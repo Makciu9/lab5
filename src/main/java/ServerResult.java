@@ -46,7 +46,8 @@ public class ServerResult {
                 })
                 .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
                         .thenCompose(res -> {
-                            System.out.println(res.toString());
+                            TestResult tmpTestResult2 = (TestResult) res;
+                            System.out.println(tmpTestResult2);
                             System.out.println(sch.getURL());
                             TestResult tmpTestResult = (TestResult) res;
                             System.out.println("dqef1wewefdfwwd");
