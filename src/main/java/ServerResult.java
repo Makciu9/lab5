@@ -25,11 +25,12 @@ import java.util.concurrent.CompletionStage;
 import java.util.regex.Pattern;
 
 public class ServerResult {
-    static ActorRef actorSystem;
-    static AsyncHttpClient httpClient = Dsl.asyncHttpClient();
+    private ActorRef actorSystem;
+    private AsyncHttpClient httpClient = Dsl.asyncHttpClient();
+    ServerResult(ActorSystem system) {actorSystem =  system.actorOf(Props.create(actorSystem.class));}
 
-    static Flow<HttpRequest, HttpResponse, NotUsed> ServerFlow(Http http, ActorSystem system, ActorMaterializer materializer) {
-        actorSystem = system.actorOf(Props.create(actorSystem.class));
+     Flow<HttpRequest, HttpResponse, NotUsed> ServerFlow(ActorMaterializer materializer) {
+        //actorSystem = system.actorOf(Props.create(actorSystem.class));
         return Flow
                 .of(HttpRequest.class)
                 .map((req) -> {

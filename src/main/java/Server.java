@@ -34,8 +34,8 @@ public class Server {
         ActorSystem system = ActorSystem.create("strimegw");
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = ServerResult.ServerFlow(http, system, materializer);
+        final ServerResult server = new ServerResult(system);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.ServerFlow(materializer);
         System.out.println("wqd");
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,

@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9349fdd3-4ff6-4c69-8a24-da284bc099d8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ServerResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ServerResult.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
