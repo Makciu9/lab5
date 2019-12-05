@@ -40,6 +40,7 @@ public class ServerResult {
                         System.out.println(paramsMap.toString());
                         return new SearchResult(url, count);
                     }
+                    System.out.println(paramsMap.toString());
 
                     return new SearchResult(url, count);
                 })
