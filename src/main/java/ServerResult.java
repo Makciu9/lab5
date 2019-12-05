@@ -19,6 +19,7 @@ import scala.util.Try;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.regex.Pattern;
 
@@ -56,12 +57,15 @@ public class ServerResult {
                                              .thenApply(resp -> System.nanoTime() - start);
                                  })
                                  .toMat(Sink.fold(0l, Long::sum), Keep.right());
-                                 if(tmpTestResult.getTime() == 0){
+                                 if(tmpTestResult.getTime() == 0) {
                                      return Source
                                              .from(Collections.singletonList(sch))
                                              .toMat(testSink, Keep.right())
                                              .run(materializer)
-                                             .thenApply(time -> new TestResult
+                                             .thenApply(time -> new TestResult(sch.getURL(),
+                                                     (long) (time / 1_000_000L / (float) ((sch.getCount() == 0) ? 1 : sch.getCount())))
+                                             );
+                                 } else {return CompletableFuture.completedFuture(
 
 
                                  }
