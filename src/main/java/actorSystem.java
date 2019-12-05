@@ -9,7 +9,7 @@ import static akka.actor.TypedActor.self;
 
 public class actorSystem extends AbstractActor {
 
-        private HashMap  <String, Integer> store = new HashMap<>();
+        private HashMap  <String, Long> store = new HashMap<>();
         //id res
         @Override
         public AbstractActor.Receive createReceive() {
