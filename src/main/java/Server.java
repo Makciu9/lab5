@@ -17,7 +17,7 @@ import java.util.concurrent.CompletionStage;
 import static jdk.nashorn.internal.runtime.regexp.joni.constants.StackType.RETURN;
 
 public class Server {
-  // private ActorRef storeActor;
+   private ActorRef storeActor;
 
     private ActorRef testPerformerRouter;
     private final String TEST_PERFORMER_ROUTER = "testPerformerRouter";
@@ -31,12 +31,11 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
-        ActorSystem system = ActorSystem.create("strimegw");
+        ActorSystem system = ActorSystem.create("strim");
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        final ServerResult server = new ServerResult(system);
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.ServerFlow(materializer);
-        System.out.println("wqd");
+
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = ServerResult.ServerFlow(http, system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost(SERVER , PORT),

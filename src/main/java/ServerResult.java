@@ -25,12 +25,11 @@ import java.util.concurrent.CompletionStage;
 import java.util.regex.Pattern;
 
 public class ServerResult {
-    private ActorRef actorSystem;
-    private AsyncHttpClient httpClient = Dsl.asyncHttpClient();
-    ServerResult(ActorSystem system) {actorSystem =  system.actorOf(Props.create(actorSystem.class));}
+    static ActorRef actorSystem;
+    static AsyncHttpClient httpClient = Dsl.asyncHttpClient();
 
-     Flow<HttpRequest, HttpResponse, NotUsed> ServerFlow(ActorMaterializer materializer) {
-        //actorSystem = system.actorOf(Props.create(actorSystem.class));
+    static Flow<HttpRequest, HttpResponse, NotUsed> ServerFlow(Http http, ActorSystem system, ActorMaterializer materializer) {
+        actorSystem = system.actorOf(Props.create(actorSystem.class));
         return Flow
                 .of(HttpRequest.class)
                 .map((req) -> {
@@ -46,11 +45,9 @@ public class ServerResult {
                     return new SearchResult(url, count);
                 })
                 .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
-                        .thenCompose(res -> {
-                          //  System.out.println(actorSystem);
-                           // System.out.println(sch.getURL());
+                        .thenCompose((res) -> {
+
                             TestResult tmpTestResult = (TestResult) res;
-                           // System.out.println("dqef1wewefdfwwd");
                             Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
                                     .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
                                     .mapAsync(6, url -> {
