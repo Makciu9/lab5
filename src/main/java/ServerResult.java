@@ -68,8 +68,8 @@ public class ServerResult {
                                                 (long) (time / 1_000_000L / (float) ((sch.getCount() == 0) ? 1 : sch.getCount())))
                                         );
                             } else {
-                                return CompletableFuture.completedFuture(tmpTestResult);
                                 System.out.println(tmpTestResult);
+                                return CompletableFuture.completedFuture(tmpTestResult);
                             }
                         }))
                 .map(res -> {
