@@ -16,6 +16,7 @@ import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Dsl;
 import scala.util.Try;
 
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Map;
@@ -44,9 +45,9 @@ public class ServerResult {
              })
              .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
                      .thenCompose(res -> {
-                         TestResult tmpTestResult =(TestResult) res;
+                         TestResult tmpTestResult = (TestResult) res;
                          Sink<Pair<Try<HttpResponse>, Long>, CompletionStage<Long>> fold = Sink.fold(0L, (agg, next) -> agg + System.currentTimeMillis() - next.second());
-                         Sink<SearchResult, CompletionStage<Long>> testSink =Flow.<SearchResult>create()
+                         Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
                                  .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
                                  .mapAsync(6, url -> {
                                      long start = System.nanoTime();
@@ -57,15 +58,23 @@ public class ServerResult {
                                              .thenApply(resp -> System.nanoTime() - start);
                                  })
                                  .toMat(Sink.fold(0l, Long::sum), Keep.right());
-                                 if(tmpTestResult.getTime() == 0) {
-                                     return Source
-                                             .from(Collections.singletonList(sch))
-                                             .toMat(testSink, Keep.right())
-                                             .run(materializer)
-                                             .thenApply(time -> new TestResult(sch.getURL(),
-                                                     (long) (time / 1_000_000L / (float) ((sch.getCount() == 0) ? 1 : sch.getCount())))
-                                             );
-                                 } else {return CompletableFuture.completedFuture(
+                         if (tmpTestResult.getTime() == 0) {
+                             return Source
+                                     .from(Collections.singletonList(sch))
+                                     .toMat(testSink, Keep.right())
+                                     .run(materializer)
+                                     .thenApply(time -> new TestResult(sch.getURL(),
+                                             (long) (time / 1_000_000L / (float) ((sch.getCount() == 0) ? 1 : sch.getCount())))
+                                     );
+                         } else {
+                             return CompletableFuture.completedFuture(tmpTestResult);
+                         }
+                     }))
+                                 .map(res -> {
+                                     System.out.println(res.getTime());
+                                     String mean = new DecimalFormat("#0.00").format(res
+
+
 
 
                                  }
