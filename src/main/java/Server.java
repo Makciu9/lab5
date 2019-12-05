@@ -31,7 +31,7 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
-        ActorSystem system = ActorSystem.create("strim");
+        ActorSystem system = ActorSystem.create("strimegw");
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
