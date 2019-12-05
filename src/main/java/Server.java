@@ -17,7 +17,7 @@ import java.util.concurrent.CompletionStage;
 import static jdk.nashorn.internal.runtime.regexp.joni.constants.StackType.RETURN;
 
 public class Server {
-   private ActorRef storeActor;
+  // private ActorRef storeActor;
 
     private ActorRef testPerformerRouter;
     private final String TEST_PERFORMER_ROUTER = "testPerformerRouter";
