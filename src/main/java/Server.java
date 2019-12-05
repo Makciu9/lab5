@@ -38,7 +38,6 @@ public class Server {
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = ServerResult.ServerFlow(http, system, materializer);
         System.out.println("wqd");
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
-                System.out.println("wqd");
                 routeFlow,
                 ConnectHttp.toHost(SERVER , PORT),
                 materializer
