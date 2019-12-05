@@ -5,8 +5,8 @@ public class TestResult {
         private String URL;
         private Long time;
 
-        public TestResult(String Url, Long time ) {
-            this.URL = Url;
+        public TestResult(String URL, Long time ) {
+            this.URL = URL;
             this.time = time;
         }
         public String getURL() {
