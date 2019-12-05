@@ -15,8 +15,10 @@ public class actorSystem extends AbstractActor {
         public AbstractActor.Receive createReceive() {
             return ReceiveBuilder.create()
                     .match(SearchResult.class, m -> {
+
                         String url = m.getURL();
                         int count = m.getCount();
+                        System.out.print(url);
                            sender().tell(new SearchResult(m.getURL(), count), self());
 
                     })
