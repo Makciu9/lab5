@@ -47,11 +47,9 @@ public class ServerResult {
                 .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
                         .thenCompose(res -> {
                             System.out.println(res.toString());
-                            System.out.println("dqef1wedfwwd");
+                            System.out.println(sch.getURL());
                             TestResult tmpTestResult = (TestResult) res;
                             System.out.println("dqef1wewefdfwwd");
-
-                           // Sink<Pair<Try<HttpResponse>, Long>, CompletionStage<Long>> fold = Sink.fold(0L, (agg, next) -> agg + System.currentTimeMillis() - next.second());
                             Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
                                     .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
                                     .mapAsync(6, url -> {
@@ -74,7 +72,7 @@ public class ServerResult {
                                                 (long) (time / 1_000_000L / (float) ((sch.getCount() == 0) ? 1 : sch.getCount())))
                                         );
                             } else {
-                                System.out.println(tmpTestResult);
+                                //System.out.println(tmpTestResult);
                                 return CompletableFuture.completedFuture(tmpTestResult);
                             }
                         }))
