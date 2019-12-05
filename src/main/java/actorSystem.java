@@ -17,8 +17,8 @@ public class actorSystem extends AbstractActor {
                     .match(SearchResult.class, m -> {
                         String url = m.getURL();
                         int count = m.getCount();
-                            if(store.containsKey(url)) sender().tell(new SearchResult(m.getURL(), count), self());
-                            else {sender().tell(new SearchResult(m.getURL(),0), self());}
+                           sender().tell(new SearchResult(m.getURL(), count), self());
+
                     })
                     .match(TestResult.class, m -> {
                         store.put(m.getURL(), m.getTime());
