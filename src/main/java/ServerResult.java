@@ -32,7 +32,7 @@ public class ServerResult {
         actorSystem = system.actorOf(Props.create(actorSystem.class));
         return Flow
                 .of(HttpRequest.class)
-                .map((req) -> {
+                .map(req -> {
                     Map<String, String> paramsMap = req.getUri().query().toMap();
                     String url = paramsMap.get("testUrl");
                     int count = Integer.parseInt(paramsMap.get("count"));
@@ -40,12 +40,12 @@ public class ServerResult {
                         System.out.println(paramsMap.toString());
                         return new SearchResult(url, count);
                     }
-                   // System.out.println(count);
+                    System.out.println(count);
 
                     return new SearchResult(url, count);
                 })
                 .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
-                        .thenCompose((res) -> {
+                        .thenCompose(res -> {
 
                             TestResult tmpTestResult = (TestResult) res;
                             Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
