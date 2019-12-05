@@ -39,32 +39,35 @@ public class ServerResult {
                  int count = Integer.parseInt(paramsMap.get("count"));
                  return new SearchResult(url, count);
              })
-             .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
-                     .thenCompose(res -> {
-                         TestResult tmpTestResult =(TestResult) res;
-                         Sink<SearchResult, CompletionStage<Long>> testSink =Flow.<SearchResult>create()
-                                 .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
-                                 .mapAsync(6, url -> {
-                                     long start = System.nanoTime();
-                                     return httpClient
-                                             .prepareGet(url)
-                                             .execute()
-                                             .toCompletableFuture()
-                                             .thenApply(resp -> System.nanoTime() - start);
-                                 })
-                                 .toMat(Sink.fold(0l, Long::sum), Keep.right());
-                                 if(tmpTestResult.getTime() == 0){
-                                     return Source
-                                             .from(Collections.singletonList(sch))
-                                             .toMat(testSink, Keep.right()).run(materializer)
-                                             .thenApply(time -> new SearchResult(sch.,
-                                                     (long) (time /1_000_000L/ (float) ((sch.getCount() == 0) ? 1 : sch.getCount()))))
-
-                                 }
+             .mapAsync(6, sch -> {
+                 return Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
+                         .thenCompose(res -> {
+                             TestResult tmpTestResult = (TestResult) res;
+                             Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
+                                     .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
+                                     .mapAsync(6, url -> {
+                                         long start = System.nanoTime();
+                                         return httpClient
+                                                 .prepareGet(url)
+                                                 .execute()
+                                                 .toCompletableFuture()
+                                                 .thenApply(resp -> System.nanoTime() - start);
+                                     })
+                                     .toMat(Sink.fold(0l, Long::sum), Keep.right());
+                             if (tmpTestResult.getTime() == 0) {
+                                 return Source
+                                         .from(Collections.singletonList(sch))
+                                         .toMat(testSink, Keep.right()).run(materializer)
+                                         .thenApply(time -> new TestResult
 
 
+                             }
+
+
+                         }
+                         ;
              }
-    }
+ }
 
 
 
