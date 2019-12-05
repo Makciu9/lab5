@@ -3,17 +3,17 @@
 public class TestResult {
 
         private String URL;
-        private int time;
+        private Long time;
 
-        public TestResult(String Url, int count ) {
+        public TestResult(String Url, Long time ) {
             this.URL = Url;
-            this.time = count;
+            this.time = time;
         }
         public String getURL() {
             return URL;
         }
 
-        public int getTime() {
+        public Long getTime() {
             return time;
         }
     }

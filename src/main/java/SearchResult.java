@@ -3,7 +3,7 @@ public class SearchResult {
     private int count;
 
     public SearchResult(String Url, int count ) {
-        this.URL = URL;
+        this.URL = Url;
         this.count = count;
     }
         public String getURL() {

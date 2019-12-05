@@ -32,12 +32,13 @@ public class ServerResult {
              .of(HttpRequest.class)
              .map((req)-> {
                  Map<String, String> paramsMap = req.getUri().query().toMap();
-                 if (!paramsMap.containsKey("testUrl") || !paramsMap.containsKey("count")) {
-                     System.out.println(paramsMap.toString());
-                     return new Pair<HttpRequest, Integer>(HttpRequest.create("localhost"), 0);
-                 }
                  String url = paramsMap.get("testUrl");
                  int count = Integer.parseInt(paramsMap.get("count"));
+                 if (!paramsMap.containsKey("testUrl") || !paramsMap.containsKey("count")) {
+                     System.out.println(paramsMap.toString());
+                     return new SearchResult(url, count);
+                 }
+
                  return new SearchResult(url, count);
              })
              .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
