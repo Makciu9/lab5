@@ -46,6 +46,7 @@ public class ServerResult {
                 })
                 .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
                         .thenCompose(res -> {
+                            System.out.println("dqef1wedfwwd");
                             TestResult tmpTestResult = (TestResult) res;
                            // Sink<Pair<Try<HttpResponse>, Long>, CompletionStage<Long>> fold = Sink.fold(0L, (agg, next) -> agg + System.currentTimeMillis() - next.second());
                             Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
