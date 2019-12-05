@@ -46,10 +46,10 @@ public class ServerResult {
                 })
                 .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
                         .thenCompose(res -> {
-                            System.out.println(actorSystem);
-                            System.out.println(sch.getURL());
+                          //  System.out.println(actorSystem);
+                           // System.out.println(sch.getURL());
                             TestResult tmpTestResult = (TestResult) res;
-                            System.out.println("dqef1wewefdfwwd");
+                           // System.out.println("dqef1wewefdfwwd");
                             Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
                                     .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
                                     .mapAsync(6, url -> {
