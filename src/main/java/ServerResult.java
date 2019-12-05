@@ -28,64 +28,56 @@ public class ServerResult {
     static ActorRef actorSystem;
     static AsyncHttpClient httpClient = Dsl.asyncHttpClient();
 
- static Flow<HttpRequest, HttpResponse, NotUsed> ServerFlow (Http http, ActorSystem system, ActorMaterializer materializer ){
-     actorSystem = system.actorOf(Props.create(actorSystem.class));
-     return Flow
-             .of(HttpRequest.class)
-             .map((req)-> {
-                 Map<String, String> paramsMap = req.getUri().query().toMap();
-                 String url = paramsMap.get("testUrl");
-                 int count = Integer.parseInt(paramsMap.get("count"));
-                 if (!paramsMap.containsKey("testUrl") || !paramsMap.containsKey("count")) {
-                     System.out.println(paramsMap.toString());
-                     return new SearchResult(url, count);
-                 }
+    static Flow<HttpRequest, HttpResponse, NotUsed> ServerFlow(Http http, ActorSystem system, ActorMaterializer materializer) {
+        actorSystem = system.actorOf(Props.create(actorSystem.class));
+        return Flow
+                .of(HttpRequest.class)
+                .map((req) -> {
+                    Map<String, String> paramsMap = req.getUri().query().toMap();
+                    String url = paramsMap.get("testUrl");
+                    int count = Integer.parseInt(paramsMap.get("count"));
+                    if (!paramsMap.containsKey("testUrl") || !paramsMap.containsKey("count")) {
+                        System.out.println(paramsMap.toString());
+                        return new SearchResult(url, count);
+                    }
 
-                 return new SearchResult(url, count);
-             })
-             .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
-                     .thenCompose(res -> {
-                         TestResult tmpTestResult = (TestResult) res;
-                         Sink<Pair<Try<HttpResponse>, Long>, CompletionStage<Long>> fold = Sink.fold(0L, (agg, next) -> agg + System.currentTimeMillis() - next.second());
-                         Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
-                                 .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
-                                 .mapAsync(6, url -> {
-                                     long start = System.nanoTime();
-                                     return httpClient
-                                             .prepareGet(url)
-                                             .execute()
-                                             .toCompletableFuture()
-                                             .thenApply(resp -> System.nanoTime() - start);
-                                 })
-                                 .toMat(Sink.fold(0l, Long::sum), Keep.right());
-                         if (tmpTestResult.getTime() == 0) {
-                             return Source
-                                     .from(Collections.singletonList(sch))
-                                     .toMat(testSink, Keep.right())
-                                     .run(materializer)
-                                     .thenApply(time -> new TestResult(sch.getURL(),
-                                             (long) (time / 1_000_000L / (float) ((sch.getCount() == 0) ? 1 : sch.getCount())))
-                                     );
-                         } else {
-                             return CompletableFuture.completedFuture(tmpTestResult);
-                         }
-                     }))
-                                 .map(res -> {
-                                     System.out.println(res.getTime());
-                                     String mean = new DecimalFormat("#0.00").format(res
+                    return new SearchResult(url, count);
+                })
+                .mapAsync(6, sch -> Patterns.ask(actorSystem, sch, Duration.ofMillis(3000))
+                        .thenCompose(res -> {
+                            TestResult tmpTestResult = (TestResult) res;
+                            Sink<Pair<Try<HttpResponse>, Long>, CompletionStage<Long>> fold = Sink.fold(0L, (agg, next) -> agg + System.currentTimeMillis() - next.second());
+                            Sink<SearchResult, CompletionStage<Long>> testSink = Flow.<SearchResult>create()
+                                    .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
+                                    .mapAsync(6, url -> {
+                                        long start = System.nanoTime();
+                                        return httpClient
+                                                .prepareGet(url)
+                                                .execute()
+                                                .toCompletableFuture()
+                                                .thenApply(resp -> System.nanoTime() - start);
+                                    })
+                                    .toMat(Sink.fold(0l, Long::sum), Keep.right());
+                            if (tmpTestResult.getTime() == 0) {
+                                return Source
+                                        .from(Collections.singletonList(sch))
+                                        .toMat(testSink, Keep.right())
+                                        .run(materializer)
+                                        .thenApply(time -> new TestResult(sch.getURL(),
+                                                (long) (time / 1_000_000L / (float) ((sch.getCount() == 0) ? 1 : sch.getCount())))
+                                        );
+                            } else {
+                                return CompletableFuture.completedFuture(tmpTestResult);
+                            }
+                        }))
+                .map(res -> {
+                    System.out.println(res.getTime());
+                    String mean = new DecimalFormat("#0.00").format(res.getTime());
+                    return HttpResponse.create()
+                            .withStatus(300)
+                            .withEntity("Среднее время отклика: " + mean + " ms");
 
-
-
-
-                                 }
-
-
-             }
+                });
     }
-
-
-
-
-
-    }
+}
 
