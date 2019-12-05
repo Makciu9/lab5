@@ -40,7 +40,7 @@ public class ServerResult {
                         System.out.println(paramsMap.toString());
                         return new SearchResult(url, count);
                     }
-                    System.out.println(count);
+                   // System.out.println(count);
 
                     return new SearchResult(url, count);
                 })
@@ -60,6 +60,7 @@ public class ServerResult {
                                     })
                                     .toMat(Sink.fold(0l, Long::sum), Keep.right());
                             if (tmpTestResult.getTime() == 0) {
+                                System.out.println(tmpTestResult);
                                 return Source
                                         .from(Collections.singletonList(sch))
                                         .toMat(testSink, Keep.right())
