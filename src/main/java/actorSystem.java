@@ -24,6 +24,7 @@ public class actorSystem extends AbstractActor {
 
                     })
                     .match(TestResult.class, m -> {
+                        System.out.print(m.getURL());
                         store.put(m.getURL(), m.getTime());
                     })
             .build();
