@@ -57,7 +57,7 @@ public class ServerResult {
                                      return Source
                                              .from(Collections.singletonList(sch))
                                              .toMat(testSink, Keep.right()).run(materializer)
-                                             .thenApply(time -> new TestResult(sch.)
+                                             .thenApply(time -> new TestResult(sch.getURL,)
 
                                  }
 
