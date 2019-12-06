@@ -60,7 +60,7 @@ public class ServerResult {
                                                 .thenApply(resp -> System.nanoTime() - start);
                                     })
                                     .toMat(Sink.fold(0l, Long::sum), Keep.right());
-                            if (tmpTestResult.getTime() == 0) {
+                            if (tmpTestResult.getTime() == -1) {
                                 System.out.println("dqwd");
                                 return Source
                                         .from(Collections.singletonList(sch))
