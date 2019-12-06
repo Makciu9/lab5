@@ -14,16 +14,16 @@ public class actorSystem extends AbstractActor {
         @Override
         public AbstractActor.Receive createReceive() {
             return ReceiveBuilder.create()
-                    .match(TestResult.class, m -> {
+                    .match(SearchResult.class, m -> {
 
                         String url = m.getURL();
-                        Long count = (long) m.getURL();
+                        Long count = (long) m.getCount();
                         System.out.print(url);
                         System.out.print(count);
                         if (store.containsKey(m.getURL())) {
-                            sender().tell(new SearchResult(m.getURL(), count), self());
+                            sender().tell(new TestResult(m.getURL(), count), self());
                         }
-                        else sender().tell(new SearchResult(m.getURL(), -1l), self())
+                        else sender().tell(new TestResult(m.getURL(), -1l), self());
 
                     })
                     .match(TestResult.class, m -> {
