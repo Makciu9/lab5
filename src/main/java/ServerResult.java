@@ -52,7 +52,7 @@ public class ServerResult {
                                     .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
                                     .mapAsync(6, url -> {
                                         long start = System.nanoTime();
-                                        System.out.println("dqwd");
+                                        //System.out.println("dqwd");
                                         return httpClient
                                                 .prepareGet(url)
                                                 .execute()
