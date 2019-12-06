@@ -52,7 +52,6 @@ public class ServerResult {
                                     .mapConcat((r) -> Collections.nCopies(r.getCount(), r.getURL()))
                                     .mapAsync(6, url -> {
                                         long start = System.nanoTime();
-                                        //System.out.println("dqwd");
                                         return httpClient
                                                 .prepareGet(url)
                                                 .execute()
@@ -61,7 +60,6 @@ public class ServerResult {
                                     })
                                     .toMat(Sink.fold(0l, Long::sum), Keep.right());
                             if (tmpTestResult.getTime() == -1) {
-                                System.out.println("dqwd");
                                 return Source
                                         .from(Collections.singletonList(sch))
                                         .toMat(testSink, Keep.right())

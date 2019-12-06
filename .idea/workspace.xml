@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1eb7eef2-01c2-4e9b-964f-df64206eedf4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/ServerResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ServerResult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/actorSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/actorSystem.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

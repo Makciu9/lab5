@@ -15,11 +15,8 @@ public class actorSystem extends AbstractActor {
         public AbstractActor.Receive createReceive() {
             return ReceiveBuilder.create()
                     .match(SearchResult.class, m -> {
-
                         String url = m.getURL();
                         Long count = (long) m.getCount();
-                        System.out.print(url);
-                        System.out.print(count);
                         if (store.containsKey(m.getURL())) {
                             sender().tell(new TestResult(m.getURL(), count), self());
                         }
@@ -27,7 +24,6 @@ public class actorSystem extends AbstractActor {
 
                     })
                     .match(TestResult.class, m -> {
-                        System.out.print(m.getURL());
                         store.put(m.getURL(), m.getTime());
                     })
             .build();
